@@ -1,3 +1,5 @@
+const display = document.querySelector('.display')
+
 const wovs = ['A', 'E', 'I', 'O', 'U']
 
 const cons = [
@@ -33,3 +35,16 @@ const syllables = [
   ['V'],
   ['C'],
 ]
+
+function getRandomLetter(arr) {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
+function generateSyllable() {
+  const pattern = getRandomLetter(syllablePatterns)
+  return pattern
+    .map((letter) =>
+      letter === 'V' ? getRandomLetter(wovs) : getRandomLetter(cons)
+    )
+    .join('')
+}

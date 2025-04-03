@@ -1,4 +1,5 @@
 const display = document.querySelector('.display')
+const genBtn = document.querySelector('.gen-btn')
 
 const wovs = ['A', 'E', 'I', 'O', 'U']
 

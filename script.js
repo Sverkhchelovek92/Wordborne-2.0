@@ -2,6 +2,8 @@ const display = document.querySelector('.display')
 const genBtn = document.querySelector('.gen-btn')
 const genCyrBtn = document.querySelector('.gen-cyr-btn')
 const numOfLetters = document.querySelector('.letters-num')
+const saveBtn = document.querySelector('.save-btn')
+const mutateBtn = document.querySelector('.mutate-btn')
 
 const wovs = ['A', 'E', 'I', 'O', 'U']
 
@@ -66,37 +68,33 @@ const syllables = [
   ['C'],
 ]
 
-genBtn.addEventListener('click', createWord)
-genCyrBtn.addEventListener('click', createCyrillicWord)
+genBtn.addEventListener('click', () => {
+  createWord(wovs, cons)
+})
+
+genCyrBtn.addEventListener('click', () => {
+  createWord(ruwovs, rucons)
+})
 
 function getRandomLetter(arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-function generateSyllable() {
+function generateSyllable(wovels, consonants) {
   const pattern = getRandomLetter(syllables)
   return pattern
     .map((letter) =>
-      letter === 'V' ? getRandomLetter(wovs) : getRandomLetter(cons)
+      letter === 'V' ? getRandomLetter(wovels) : getRandomLetter(consonants)
     )
     .join('')
 }
 
-function generateCyrillicSyllable() {
-  const pattern = getRandomLetter(syllables)
-  return pattern
-    .map((letter) =>
-      letter === 'V' ? getRandomLetter(ruwovs) : getRandomLetter(rucons)
-    )
-    .join('')
-}
-
-function createWord() {
+function createWord(wovs, cons) {
   const number = numOfLetters.value
   let word = ''
 
   while (word.length < number) {
-    let syllable = generateSyllable()
+    let syllable = generateSyllable(wovs, cons)
     if (word.length + syllable.length <= number) {
       word += syllable
     }
@@ -104,19 +102,7 @@ function createWord() {
 
   display.textContent = word
   console.log(word)
-}
 
-function createCyrillicWord() {
-  const number = numOfLetters.value
-  let word = ''
-
-  while (word.length < number) {
-    let syllable = generateCyrillicSyllable()
-    if (word.length + syllable.length <= number) {
-      word += syllable
-    }
-  }
-
-  display.textContent = word
-  console.log(word)
+  saveBtn.classList.remove('hidden')
+  mutateBtn.classList.remove('hidden')
 }

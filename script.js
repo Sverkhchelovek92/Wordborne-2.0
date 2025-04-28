@@ -68,12 +68,16 @@ const syllables = [
   ['C'],
 ]
 
+let abcState = 'latin'
+
 genBtn.addEventListener('click', () => {
   createWord(wovs, cons)
+  abcState = 'latin'
 })
 
 genCyrBtn.addEventListener('click', () => {
   createWord(ruwovs, rucons)
+  abcState = 'cyrillic'
 })
 
 function getRandomLetter(arr) {
@@ -106,3 +110,43 @@ function createWord(wovs, cons) {
   saveBtn.classList.remove('hidden')
   mutateBtn.classList.remove('hidden')
 }
+
+function getRandomElement(arr1, arr2) {
+  const combined = [...arr1, ...arr2]
+  return combined[Math.floor(Math.random() * combined.length)]
+}
+
+function mutate() {
+  let word = display.textContent
+
+  console.log(word)
+  console.log(abcState)
+
+  function getNewLetter() {
+    let letter = ''
+
+    if (abcState === 'latin') {
+      letter = getRandomElement(wovs, cons)
+    } else {
+      letter = getRandomElement(ruwovs, rucons)
+    }
+
+    return letter
+  }
+
+  const newLetter = getNewLetter()
+  console.log(newLetter)
+
+  const letterToMutate = Math.floor(Math.random() * word.length)
+
+  const newWord =
+    word.substring(0, letterToMutate) +
+    newLetter +
+    word.substring(letterToMutate + 1)
+
+  display.textContent = newWord
+}
+
+mutateBtn.addEventListener('click', mutate)
+
+// abcState === 'latin' ?

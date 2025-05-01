@@ -5,6 +5,8 @@ const numOfLetters = document.querySelector('.letters-num')
 const saveBtn = document.querySelector('.save-btn')
 const mutateBtn = document.querySelector('.mutate-btn')
 
+const savedWordsDisplay = document.querySelector('.display_words')
+
 const wovs = ['A', 'E', 'I', 'O', 'U']
 
 const cons = [
@@ -149,4 +151,37 @@ function mutate() {
 
 mutateBtn.addEventListener('click', mutate)
 
-// abcState === 'latin' ?
+function saveWord() {
+  const savedWord = display.textContent
+
+  const savedWordInList = document.createElement('li')
+  const savedWordWord = document.createElement('span')
+  savedWordInList.appendChild(savedWordWord)
+  savedWordWord.textContent = savedWord
+  savedWordWord.className = 'p-word'
+  savedWordInList.className = 'saved-li'
+
+  const delBtn = document.createElement('button')
+  delBtn.className = 'del-btn'
+  delBtn.textContent = 'Delete'
+  delBtn.dataset.action = 'delete'
+
+  const btnDiv = document.createElement('div')
+  btnDiv.className = 'btn-div'
+
+  btnDiv.appendChild(delBtn)
+
+  savedWordInList.appendChild(btnDiv)
+  savedWordsDisplay.appendChild(savedWordInList)
+}
+
+saveBtn.addEventListener('click', saveWord)
+
+function deleteWord(event) {
+  if (event.target.dataset.action === 'delete') {
+    const parentLi = event.target.closest('li')
+    parentLi.remove()
+  }
+}
+
+savedWordsDisplay.addEventListener('click', deleteWord)
